@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lib_core" />
             <option value="$PROJECT_DIR$/lib_mvp" />
+            <option value="$PROJECT_DIR$/lib_network" />
             <option value="$PROJECT_DIR$/module_bottom_nav" />
           </set>
         </option>
