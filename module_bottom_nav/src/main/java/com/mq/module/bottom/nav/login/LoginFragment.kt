@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import com.mq.lib.mvp.BaseMVPFragment
+import com.mq.lib.mvp.VBFragment
 import com.mq.lib.mvp.presenters
 import com.mq.module.bottom.nav.R
 import com.mq.module.bottom.nav.databinding.FragmentLoginBinding
 
-class LoginFragment : BaseMVPFragment<FragmentLoginBinding>(), LoginRegisterView {
+class LoginFragment : VBFragment<FragmentLoginBinding>(), LoginRegisterView {
     private val presenter by presenters<LoginRegisterView, LoginPresenter>(this)
     override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentLoginBinding? {
         return FragmentLoginBinding.inflate(inflater, container, false)

@@ -1,8 +1,6 @@
 package com.mq.lib.mvp
 
-import androidx.activity.ComponentActivity
 import androidx.annotation.MainThread
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
@@ -10,7 +8,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import kotlin.reflect.KClass
 
 @MainThread
-inline fun <reified V : IBaseView, reified P : BasePresenter<V>> ComponentActivity.presenters(
+inline fun <reified V : IBaseView, reified P : BasePresenter<V>> BaseMVPActivity.presenters(
     v: V,
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ): Lazy<P> {
@@ -21,7 +19,7 @@ inline fun <reified V : IBaseView, reified P : BasePresenter<V>> ComponentActivi
 }
 
 @MainThread
-inline fun <reified V : IBaseView, reified VM : BasePresenter<V>> Fragment.presenters(
+inline fun <reified V : IBaseView, reified VM : BasePresenter<V>> BaseMVPFragment.presenters(
     v: V,
     noinline ownerProducer: () -> ViewModelStoreOwner = { this },
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -36,7 +34,7 @@ inline fun <reified V : IBaseView, reified VM : BasePresenter<V>> Fragment.prese
 )
 
 @MainThread
-fun <V : IBaseView, P : BasePresenter<V>> Fragment.createViewModelLazy(
+fun <V : IBaseView, P : BasePresenter<V>> BaseMVPFragment.createViewModelLazy(
     viewModelClass: KClass<P>,
     v: V,
     storeProducer: () -> ViewModelStore,

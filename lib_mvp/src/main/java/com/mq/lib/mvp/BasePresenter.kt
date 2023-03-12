@@ -23,7 +23,7 @@ abstract class BasePresenter<V : IBaseView> : IBasePresenter<V>, BaseViewModel()
                 }
 
                 override fun onDestroy() {
-                    Log.d("TAG","--------->onDestroy")
+                    Log.d("TAG","--------->onDestroy===>$view")
                     detachView()
                 }
             })

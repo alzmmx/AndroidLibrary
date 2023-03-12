@@ -6,34 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<VB : ViewBinding>(@LayoutRes private val contentLayoutId: Int? = null) : Fragment() {
-    private var _binding: VB? = null
-    protected val binding: VB
-        get() {
-            return _binding!!
-        }
+abstract class BaseFragment(@LayoutRes protected val contentLayoutId: Int? = null) : Fragment() {
 
     private var first = true
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val layoutRes = contentLayoutId ?: getLayoutId()
-        return if (layoutRes != 0) {
-            val view = inflater.inflate(getLayoutId(), container, false)
-            initView(view)
-            view
-        } else {
-            _binding = binding(inflater, container)
-            if (_binding == null) {
-                throw NullPointerException("ViewBinding must not null,you should return the correct ViewBinding or override getLayoutId")
-            }
-            initView(binding.root)
-            binding.root
-        }
-    }
+        val view = inflater.inflate(contentLayoutId ?: getLayoutId(), container, false)
+        initView(view)
+        return view
 
-    protected open fun binding(inflater: LayoutInflater, container: ViewGroup?): VB? {
-        return null
     }
 
     protected open fun initView(view: View) {}
@@ -52,10 +33,5 @@ abstract class BaseFragment<VB : ViewBinding>(@LayoutRes private val contentLayo
 
     protected open fun lazyLoad() {
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

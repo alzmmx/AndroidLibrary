@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.mq.lib.mvp.BaseMVPFragment
+import com.mq.lib.mvp.VBFragment
 import com.mq.lib.mvp.presenters
 import com.mq.module.bottom.nav.databinding.FragmentRegisterBinding
 
-class RegisterFragment : BaseMVPFragment<FragmentRegisterBinding>(), LoginRegisterView {
+class RegisterFragment : VBFragment<FragmentRegisterBinding>(), LoginRegisterView {
 
     private val presenter by presenters<LoginRegisterView, LoginPresenter>(this)
     override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentRegisterBinding {

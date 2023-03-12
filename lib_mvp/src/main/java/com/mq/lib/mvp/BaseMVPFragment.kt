@@ -9,8 +9,7 @@ import com.mq.core.BaseFragment
 import com.mq.lib.mvp.lifecycle.MVPLifecycleOwner
 import com.mq.lib.mvp.lifecycle.MVPLifecycleRegistry
 
-abstract class BaseMVPFragment<VB : ViewBinding>(@LayoutRes contentLayoutId: Int? = null) : BaseFragment<VB>(contentLayoutId), MVPLifecycleOwner,
-    IBaseView {
+abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null) : BaseFragment(contentLayoutId), MVPLifecycleOwner, IBaseView {
 
     private var mvpViewLifecycle: MVPLifecycleRegistry? = null
 
