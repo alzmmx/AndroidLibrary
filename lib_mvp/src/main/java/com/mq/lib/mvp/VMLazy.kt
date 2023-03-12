@@ -19,12 +19,12 @@ inline fun <reified V : IBaseView, reified P : BasePresenter<V>> BaseMVPActivity
 }
 
 @MainThread
-inline fun <reified V : IBaseView, reified VM : BasePresenter<V>> BaseMVPFragment.presenters(
+inline fun <reified V : IBaseView, reified P : BasePresenter<V>> BaseMVPFragment.presenters(
     v: V,
     noinline ownerProducer: () -> ViewModelStoreOwner = { this },
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = createViewModelLazy(
-    VM::class,
+): Lazy<P> = createViewModelLazy(
+    P::class,
     v,
     { ownerProducer().viewModelStore },
     factoryProducer ?: {
