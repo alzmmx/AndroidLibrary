@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleRegistry
 /**
  * 这里继承LifecycleRegistry是复用Lifecycle的 Observer管理功能
  */
-internal class MVPLifecycleRegistry(provider: LifecycleOwner, private val reset: Boolean = false) : LifecycleRegistry(provider) {
+class MVPLifecycleRegistry(provider: LifecycleOwner, private val reset: Boolean = false) : LifecycleRegistry(provider) {
     private val mObserverList = mutableListOf<LifecycleObserver>()
 
     internal fun onCreate() {
