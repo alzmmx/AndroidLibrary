@@ -8,8 +8,10 @@ import androidx.viewbinding.ViewBinding
 import com.mq.core.BaseFragment
 import com.mq.lib.mvp.lifecycle.MVPLifecycleOwner
 import com.mq.lib.mvp.lifecycle.MVPLifecycleRegistry
+import ct4.base.mvp.DefaultFragmentDelegate
 
-abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null) : BaseFragment(contentLayoutId), MVPLifecycleOwner, IBaseView {
+abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null ,private val delegate: IDelegate = DefaultFragmentDelegate())
+    : BaseFragment(contentLayoutId), MVPLifecycleOwner, IBaseView , IDelegate by delegate{
 
     private var mvpViewLifecycle: MVPLifecycleRegistry? = null
 
