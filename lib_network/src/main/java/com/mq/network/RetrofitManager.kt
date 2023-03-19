@@ -1,6 +1,5 @@
 package com.mq.network
 
-import ct4.lib.tool.utils.LogUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -61,7 +60,7 @@ object RetrofitManager {
 
         return OkHttpClient.Builder().apply {
             interceptors.forEach { addInterceptor(it) }
-            if (LogUtil.isDebug) {
+            if (BuildConfig.DEBUG) {
                 val loginInterceptor = HttpLoggingInterceptor()
                 loginInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 addNetworkInterceptor(loginInterceptor)

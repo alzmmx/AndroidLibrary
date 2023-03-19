@@ -8,7 +8,8 @@ import androidx.viewbinding.ViewBinding
  * 若使用ViewBinding 不可传入contentLayoutId 和重写 getLayoutId()
  * 若不使用ViewBinding，泛型VB 传ViewBinding,传入contentLayoutId 或者重写 getLayoutId()即可
  */
-abstract class VBActivity<VB : ViewBinding>(@LayoutRes contentLayoutId: Int? = null) : BaseMVPActivity(contentLayoutId) {
+abstract class VBActivity<VB : ViewBinding>(@LayoutRes contentLayoutId: Int? = null, delegate: IDelegate = DefaultActivityDelegate()) :
+    BaseMVPActivity(contentLayoutId, delegate) {
     private var _binding: VB? = null
     protected val binding get() = _binding!!
 

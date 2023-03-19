@@ -1,4 +1,4 @@
-package ct4.base.mvp
+package com.mq.lib.mvp
 
 import android.content.Context
 import android.widget.Toast
@@ -31,23 +31,23 @@ open class DefaultFragmentDelegate : IDelegate {
     }
 
 
-    override fun p2vGetContext(): Context {
+    override fun getViewContext(): Context {
         check()
         return fragment!!.requireContext()
     }
 
-    override fun p2vShowMessage(msg: String?) {
-        Toast.makeText(p2vGetContext(), msg, Toast.LENGTH_SHORT).show()
+    override fun showMessage(message: String?) {
+        Toast.makeText(getViewContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun p2vShowLoading() {
+    override fun showLoading() {
     }
 
-    override fun p2vHideLoading() {
+    override fun hideLoading() {
     }
 
-    override fun getResString(@StringRes resId: Int): String {
+    override fun getResString(@StringRes res: Int): String {
         check()
-        return fragment!!.getString(resId)
+        return fragment!!.getString(res)
     }
 }

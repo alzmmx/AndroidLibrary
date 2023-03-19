@@ -1,4 +1,4 @@
-package ct4.base.mvp
+package com.mq.lib.mvp
 
 import android.app.Activity
 import android.content.Context
@@ -31,24 +31,24 @@ open class DefaultActivityDelegate : IDelegate {
     }
 
 
-    override fun p2vGetContext(): Context {
+    override fun getViewContext(): Context {
         checkActivity()
         return activity!!
     }
 
-    override fun p2vShowMessage(msg: String?) {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    override fun showMessage(message: String?) {
+        Toast.makeText(getViewContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun p2vShowLoading() {
+    override fun showLoading() {
     }
 
-    override fun p2vHideLoading() {
+    override fun hideLoading() {
     }
 
-    override fun getResString(@StringRes resId: Int): String {
+    override fun getResString(@StringRes res: Int): String {
         checkActivity()
-        return activity!!.getString(resId)
+        return activity!!.getString(res)
     }
 
 

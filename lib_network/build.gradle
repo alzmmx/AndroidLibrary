@@ -38,4 +38,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3"
+
+    implementation 'com.github.MAXHJAN:MLog:1.0.2'
 }

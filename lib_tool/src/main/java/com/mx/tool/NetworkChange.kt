@@ -11,7 +11,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.MainThread
 import androidx.annotation.RequiresPermission
-import ct4.lib.tool.utils.LogUtil
+import com.mx.mlog.MLog
 
 /**
  *
@@ -33,7 +33,7 @@ object NetworkChange {
             connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             registerNetworkChangeListener(NetworkCallback(object : NetworkChangeListener {
                 override fun onChange(isConnect: Boolean) {
-                    LogUtil.d(TAG, "------------------>网络=$isConnect")
+                    MLog.d(TAG, "------------------>网络=$isConnect")
                     if (isNetWorkConnect != isConnect) {
                         isNetWorkConnect = isConnect
                         dispatch(isConnect)
@@ -86,7 +86,7 @@ object NetworkChange {
 
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            LogUtil.d(TAG, "------->网络已连接")
+            MLog.d(TAG, "------->网络已连接")
             handler.postDelayed({
                 callback.onChange(true)
             }, 2000)
@@ -94,14 +94,14 @@ object NetworkChange {
 
         override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
             super.onCapabilitiesChanged(network, networkCapabilities)
-            LogUtil.d(TAG, "------->网络变化")
+            MLog.d(TAG, "------->网络变化")
             if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
                 handler.removeCallbacksAndMessages(null)
                 if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    LogUtil.i(TAG, "---->wifi已经连接")
+                    MLog.i(TAG, "---->wifi已经连接")
                     doCallback(isMobile, true)
                 } else if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    LogUtil.i(TAG, "---->数据流量已经连接")
+                    MLog.i(TAG, "---->数据流量已经连接")
                     doCallback(true, isWiFi)
                 }
 
@@ -110,7 +110,7 @@ object NetworkChange {
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            LogUtil.d(TAG, "------->网络断开")
+            MLog.d(TAG, "------->网络断开")
             handler.postDelayed({
                 doCallback(mobileConnect = false, wifiConnect = false)
             }, 2000)

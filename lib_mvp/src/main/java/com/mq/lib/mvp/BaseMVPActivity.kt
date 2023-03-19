@@ -7,7 +7,8 @@ import com.mq.core.BaseActivity
 import com.mq.lib.mvp.lifecycle.MVPLifecycleOwner
 import com.mq.lib.mvp.lifecycle.MVPLifecycleRegistry
 
-abstract class BaseMVPActivity(@LayoutRes contentLayoutId: Int? = null) : BaseActivity(contentLayoutId), MVPLifecycleOwner, IBaseView {
+abstract class BaseMVPActivity(@LayoutRes contentLayoutId: Int? = null, private val delegate: IDelegate = DefaultActivityDelegate()) :
+    BaseActivity(contentLayoutId), MVPLifecycleOwner, IBaseView, IDelegate by delegate {
     private var mvpViewLifecycle: MVPLifecycleRegistry? = null
 
     private fun initialize() {
@@ -25,11 +26,13 @@ abstract class BaseMVPActivity(@LayoutRes contentLayoutId: Int? = null) : BaseAc
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         getViewLifecycle().onCreate()
+        delegate.attach(this)
         super.onCreate(savedInstanceState)
     }
 
     @CallSuper
     override fun onDestroy() {
+        delegate.detach()
         getViewLifecycle().onDestroy()
         super.onDestroy()
     }

@@ -1,7 +1,6 @@
-package ct4.common.language
+package com.mx.tool.language
 
-import com.stl.common.utils.BLLanguageUtils
-import java.util.Locale
+import java.util.*
 
 /**
  *
@@ -10,7 +9,7 @@ import java.util.Locale
  * 这里支持的语言需要与locales-config.xml配置保持一致
  */
 enum class SupportLanguage(val type: Int, val local: Locale) {
-    EN(BLLanguageUtils.LANGUAGE_EN, Locale.ENGLISH),
-    ZH_HANS(BLLanguageUtils.LANGUAGE_ZH_HANS, Locale.CHINESE),
-    ZH_HANT(BLLanguageUtils.LANGUAGE_ZH_HANT, Locale.TRADITIONAL_CHINESE)
+    EN(0, Locale.ENGLISH),
+    ZH_HANS(1, Locale.CHINESE),
+    ZH_HANT(2, Locale.TRADITIONAL_CHINESE)
 }

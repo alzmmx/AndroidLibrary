@@ -8,7 +8,8 @@ import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.mq.core.BaseFragment
 
-abstract class VBFragment<VB : ViewBinding>(@LayoutRes contentLayoutId: Int? = null) : BaseMVPFragment(contentLayoutId) {
+abstract class VBFragment<VB : ViewBinding>(@LayoutRes contentLayoutId: Int? = null, delegate: IDelegate = DefaultFragmentDelegate()) :
+    BaseMVPFragment(contentLayoutId, delegate) {
     private var _binding: VB? = null
     protected val binding: VB
         get() {

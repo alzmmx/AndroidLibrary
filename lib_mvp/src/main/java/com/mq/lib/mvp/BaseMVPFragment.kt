@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
-import androidx.viewbinding.ViewBinding
 import com.mq.core.BaseFragment
 import com.mq.lib.mvp.lifecycle.MVPLifecycleOwner
 import com.mq.lib.mvp.lifecycle.MVPLifecycleRegistry
-import ct4.base.mvp.DefaultFragmentDelegate
 
-abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null ,private val delegate: IDelegate = DefaultFragmentDelegate())
-    : BaseFragment(contentLayoutId), MVPLifecycleOwner, IBaseView , IDelegate by delegate{
+abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null, private val delegate: IDelegate = DefaultFragmentDelegate()) :
+    BaseFragment(contentLayoutId), MVPLifecycleOwner, IBaseView, IDelegate by delegate {
 
     private var mvpViewLifecycle: MVPLifecycleRegistry? = null
 
@@ -32,11 +30,13 @@ abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null ,private 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getViewLifecycle().onCreate()
+        delegate.attach(this)
 
     }
 
     @CallSuper
     override fun onDestroyView() {
+        delegate.detach()
         getViewLifecycle().onDestroy()
         super.onDestroyView()
     }

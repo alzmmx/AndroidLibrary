@@ -10,6 +10,8 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 
+import com.mx.mlog.MLog;
+
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -44,7 +46,7 @@ public class WebPools {
                     return false;
                 });
             } catch (Throwable var2) {
-                LogUtil.e("PreloadingWebView", "Oops!" + var2);
+                MLog.INSTANCE.e("PreloadingWebView", "Oops!" + var2);
             }
         });
     }

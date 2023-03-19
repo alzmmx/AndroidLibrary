@@ -1,11 +1,10 @@
-package ct4.common.language
+package com.mx.tool.language
 
 import android.os.Build
 import android.os.Build.VERSION
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import com.stl.common.sp.BLSpUtils
-import com.stl.common.utils.BLLanguageUtils
+import com.mx.tool.KVStore
 
 /**
  *
@@ -14,8 +13,11 @@ import com.stl.common.utils.BLLanguageUtils
  * 全局语言设置
  */
 object LanguageManager {
-    private const val SP_LANGUAGE = "sp_language"
     private const val LANGUAGE_TYPE = "language_type"
+    const val LANGUAGE_SYSTEM = -1
+    const val LANGUAGE_EN = 0
+    const val LANGUAGE_ZH_HANS = 1
+    const val LANGUAGE_ZH_HANT = 2
 
     val supportLanguages = listOf(SupportLanguage.EN, SupportLanguage.ZH_HANS, SupportLanguage.ZH_HANT)
 
@@ -25,7 +27,7 @@ object LanguageManager {
     fun init() {
         if (VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             supportLanguage = initLanguage()
-            BLSpUtils.getInstance().putInt(SP_LANGUAGE, LANGUAGE_TYPE, supportLanguage.type)
+            KVStore.putInt(LANGUAGE_TYPE, supportLanguage.type)
         } else {
             supportLanguage = getSupportLanguage()
         }
@@ -56,28 +58,24 @@ object LanguageManager {
 
     @JvmStatic
     fun getCurrentLanguageType(): Int {
-        var languageType = BLSpUtils.getInstance().getInt(SP_LANGUAGE, LANGUAGE_TYPE, BLLanguageUtils.LANGUAGE_SYSTEM)
-        if (languageType == BLLanguageUtils.LANGUAGE_SYSTEM) {
+        var languageType = KVStore.getInt(LANGUAGE_TYPE, LANGUAGE_SYSTEM)
+        if (languageType == LANGUAGE_SYSTEM) {
             languageType = getTypeBySystem()
-            BLSpUtils.getInstance().putInt(SP_LANGUAGE, LANGUAGE_TYPE, languageType)
+            KVStore.putInt(LANGUAGE_TYPE, languageType)
         }
         return languageType
     }
 
     @JvmStatic
     private fun getTypeBySystem(): Int {
-        return when (BLLanguageUtils.getLanguageType()) {
-            BLLanguageUtils.LANGUAGE_ZH_HANS -> BLLanguageUtils.LANGUAGE_ZH_HANS
-            BLLanguageUtils.LANGUAGE_ZH_HANT -> BLLanguageUtils.LANGUAGE_ZH_HANT
-            else -> BLLanguageUtils.LANGUAGE_EN
-        }
+        return 0
     }
 
     @JvmStatic
     fun getSupportLanguage(): SupportLanguage {
         return when (getCurrentLanguageType()) {
-            BLLanguageUtils.LANGUAGE_ZH_HANS -> SupportLanguage.ZH_HANS
-            BLLanguageUtils.LANGUAGE_ZH_HANT -> SupportLanguage.ZH_HANT
+            LANGUAGE_ZH_HANS -> SupportLanguage.ZH_HANS
+            LANGUAGE_ZH_HANT -> SupportLanguage.ZH_HANT
             else -> SupportLanguage.EN
         }
     }
@@ -87,7 +85,7 @@ object LanguageManager {
 
     @JvmStatic
     fun switchLanguage(language: SupportLanguage) {
-        BLSpUtils.getInstance().putInt(SP_LANGUAGE, LANGUAGE_TYPE, language.type)
+        KVStore.putInt(LANGUAGE_TYPE, language.type)
         supportLanguage = language
         AppCompatDelegate.setApplicationLocales(LocaleListCompat.create(language.local))
     }
@@ -97,28 +95,6 @@ object LanguageManager {
     fun isChinese() = supportLanguage == SupportLanguage.ZH_HANS
 
     fun isHant() = supportLanguage == SupportLanguage.ZH_HANT
-
-
-    /**
-     * 分别对应FB服务端定义的语言id
-     */
-    private const val SERVER_LANGUAGE_CN = 1
-    private const val SERVER_LANGUAGE_TW = 2
-    private const val SERVER_LANGUAGE_EN = 0
-
-    /**
-     * 新闻模块api的langId
-     * (新闻模块使用FB的api所以langId是独立的)
-     * 语言（0-英文 1-简中 2-繁体）
-     */
-    @JvmStatic
-    fun getNewsLangId(): Int {
-        return when (supportLanguage) {
-            SupportLanguage.ZH_HANS -> SERVER_LANGUAGE_CN
-            SupportLanguage.ZH_HANT -> SERVER_LANGUAGE_TW
-            else -> SERVER_LANGUAGE_EN
-        }
-    }
 
 
 }
