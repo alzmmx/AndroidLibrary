@@ -6,8 +6,15 @@ import androidx.lifecycle.ViewModel
 
 class DashboardViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    private val _times = MutableLiveData<List<Long>>()
+    val timesLiveData: LiveData<List<Long>> = _times
+
+    fun createTimes() {
+        val cur = System.currentTimeMillis()
+        val times = mutableListOf<Long>()
+        for (i in 0..100) {
+            times.add(cur - i * 3600 * 1000)
+        }
+        _times.value = times
     }
-    val text: LiveData<String> = _text
 }

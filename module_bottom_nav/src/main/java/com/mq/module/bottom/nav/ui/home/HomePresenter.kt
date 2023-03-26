@@ -11,8 +11,6 @@ class HomePresenter : BasePresenter<HomeView>() {
     fun startLogin(context: Context) {
         //context.startActivity(Intent(context, LoginActivity::class.java))
         viewModelScope.launch {
-            val data = RetrofitManager.getApi(Api::class.java).getData()
-            Log.d("TAG", "----->data=${data}")
         }
     }
 }

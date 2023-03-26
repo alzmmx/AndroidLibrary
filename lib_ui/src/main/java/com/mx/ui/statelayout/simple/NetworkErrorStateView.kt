@@ -1,6 +1,7 @@
 package com.mx.ui.statelayout.simple
 
 import com.mx.ui.R
+import com.mx.ui.statelayout.DefaultStateView
 
 
 /**
@@ -13,11 +14,10 @@ class NetworkErrorStateView(var retry: (() -> Unit)? = null) : DefaultStateView(
     override fun getViewState() = StateCode.NETWORK_ERROR_CODE
 
     override fun onAttach() {
-        binding.ivIcon.setImageResource(R.drawable.common_ic_network_error)
-        binding.tvTips.setText(R.string.common_def_network_error)
+        binding.ivIcon.setImageResource(R.drawable.ic_network_error)
+        binding.tvTips.setText(R.string.def_network_error)
         binding.btnAction.run {
-            setText(R.string.common_reload)
-            setBackgroundResource(R.drawable.common_shape_white_r4_s1_e6ecec)
+            setText(R.string.reload)
             setOnClickListener {
                 retry?.invoke()
             }

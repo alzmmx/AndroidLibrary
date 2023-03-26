@@ -6,9 +6,9 @@ import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import ct4.lib.ui.widget.statelayout.simple.DataEmptyStateView
-import ct4.lib.ui.widget.statelayout.simple.NetworkErrorStateView
-import ct4.lib.ui.widget.statelayout.simple.SearchResultEmptyStateView
+import com.mx.ui.statelayout.simple.NetworkErrorStateView
+import com.mx.ui.statelayout.simple.SearchResultEmptyStateView
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
  *
@@ -28,7 +28,7 @@ class StateLayout @JvmOverloads constructor(
 
     internal fun init(builder: Builder) {
         this.stateViews = builder.stateViews
-        showStateView(mState)
+        stateViews.get(mState.value).show(this)
     }
 
     fun showStateView(state: State) {
@@ -115,8 +115,14 @@ class StateLayout @JvmOverloads constructor(
         private fun replaceTargetView(index: Int) {
             val params = target.layoutParams
             parent?.removeView(target)
-            target.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            parent?.addView(stateLayout, index, params)
+            if (parent is SmartRefreshLayout){
+                target.layoutParams = SmartRefreshLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                parent.addView(stateLayout, index, params)
+                parent.requestLayout()
+            }else {
+                target.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                parent?.addView(stateLayout, index, params)
+            }
         }
 
     }

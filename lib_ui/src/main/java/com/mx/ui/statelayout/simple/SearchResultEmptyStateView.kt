@@ -1,9 +1,8 @@
 package com.mx.ui.statelayout.simple
 
 import androidx.annotation.LayoutRes
-import ct4.lib.ui.R
-import ct4.lib.ui.widget.statelayout.State
-import ct4.lib.ui.widget.statelayout.BaseStateView
+import com.mx.ui.R
+import com.mx.ui.statelayout.BaseStateView
 
 /**
  *

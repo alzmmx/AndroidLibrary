@@ -1,42 +1,31 @@
 package com.mq.module.bottom.nav.ui.notifications
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.mq.lib.mvp.VBFragment
 import com.mq.module.bottom.nav.databinding.FragmentNotificationsBinding
+import com.mx.ui.statelayout.State
+import com.mx.ui.statelayout.StateLayout
+import com.mx.ui.statelayout.simple.StateCode
 
-class NotificationsFragment : Fragment() {
+class NotificationsFragment : VBFragment<FragmentNotificationsBinding>() {
 
-    private var _binding: FragmentNotificationsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+    private lateinit var stateLayout: StateLayout
+    override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentNotificationsBinding? {
+        return FragmentNotificationsBinding.inflate(inflater, container, false)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun initView(view: View) {
+        stateLayout = StateLayout.default(binding.content)!!
+        binding.btnEmpty.setOnClickListener {
+            stateLayout.showEmpty()
+        }
+        binding.btnContent.setOnClickListener {
+            stateLayout.showContent()
+        }
+        binding.btnNetwork.setOnClickListener {
+            stateLayout.showStateView(State.create(StateCode.NETWORK_ERROR_CODE))
+        }
     }
 }

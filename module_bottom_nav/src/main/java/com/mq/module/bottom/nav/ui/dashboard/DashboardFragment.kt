@@ -1,42 +1,29 @@
 package com.mq.module.bottom.nav.ui.dashboard
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mq.lib.mvp.VBFragment
 import com.mq.module.bottom.nav.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : VBFragment<FragmentDashboardBinding>() {
 
-    private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+    private val rvAdapter = RvAdapter(emptyList())
+    private val viewModel by viewModels<DashboardViewModel>()
+    override fun binding(inflater: LayoutInflater, container: ViewGroup?): FragmentDashboardBinding {
+        return FragmentDashboardBinding.inflate(inflater, container, false)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun initView(view: View) {
+        binding.rvData.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvData.addItemDecoration(TimeAxisDecoration())
+        binding.rvData.adapter = rvAdapter
+        viewModel.timesLiveData.observe(viewLifecycleOwner) {
+            rvAdapter.submitList(it)
+        }
+        viewModel.createTimes()
     }
 }

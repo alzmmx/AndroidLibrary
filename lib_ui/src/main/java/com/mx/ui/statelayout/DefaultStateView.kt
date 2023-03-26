@@ -1,10 +1,10 @@
-package com.mx.ui.statelayout.simple
+package com.mx.ui.statelayout
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import ct4.lib.ui.databinding.CommonDefStateViewBinding
-import ct4.lib.ui.widget.statelayout.BaseStateView
+import com.mx.ui.databinding.CommonDefStateViewBinding
+import com.mx.ui.statelayout.BaseStateView
 
 /**
  *

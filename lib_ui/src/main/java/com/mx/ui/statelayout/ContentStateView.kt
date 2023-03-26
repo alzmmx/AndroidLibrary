@@ -1,4 +1,4 @@
-package ct4.lib.ui.widget.statelayout
+package com.mx.ui.statelayout
 
 import android.view.View
 
