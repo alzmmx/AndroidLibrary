@@ -9,6 +9,6 @@ class DataDiffCallback : DiffUtil.ItemCallback<CacheEntry>() {
     }
 
     override fun areContentsTheSame(oldItem: CacheEntry, newItem: CacheEntry): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.id == newItem.id && oldItem.data == newItem.data
     }
 }

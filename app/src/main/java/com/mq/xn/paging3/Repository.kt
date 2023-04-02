@@ -22,7 +22,7 @@ object Repository {
     suspend fun realGetData(page: Int, pageSize: Int): MutableList<CacheEntry> {
 
         return withContext(Dispatchers.IO) {
-            delay(3000)
+            delay(1000)
             Log.d("TAG", "--------->page=$page pageSize=$pageSize")
             dataList.subList(page * pageSize, (page + 1) * pageSize)
         }
@@ -33,14 +33,14 @@ object Repository {
         return Pager(
             config = PagingConfig(pageSize, initialLoadSize = 20),
             remoteMediator = PagingRemoteMediator(),
-            pagingSourceFactory = { RepoPagingSource() }
+            pagingSourceFactory = { XLimitOffsetPagingSource() }
         ).flow
     }
 
     fun init() {
         val id = SimpleDateFormat("yyyy_MM_dd_HH_mm", Locale.getDefault()).format(Date())
         for (i in 0..1000) {
-            dataList.add(CacheEntry("$id-$i", "$${i / 20}-$i"))
+            dataList.add(CacheEntry("$i", "$${i / 20}-$i"))
         }
     }
 }
