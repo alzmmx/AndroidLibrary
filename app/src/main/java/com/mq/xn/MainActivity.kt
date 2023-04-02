@@ -1,17 +1,23 @@
 package com.mq.xn
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mq.core.BaseViewBindingActivity
 import com.mq.xn.databinding.ActivityMainBinding
+import com.mq.xn.paging3.Paging3Activity
+import com.mq.xn.paging3.Repository
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseViewBindingActivity<ActivityMainBinding>() {
 
-    private lateinit var binding: ActivityMainBinding
+    override fun binding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun initView() {
+        Repository.init()
+        binding.button.setOnClickListener {
+            startActivity(Intent(this, Paging3Activity::class.java))
+        }
     }
 }
