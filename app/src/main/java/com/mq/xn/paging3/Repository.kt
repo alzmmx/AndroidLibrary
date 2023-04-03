@@ -33,7 +33,7 @@ object Repository {
         return Pager(
             config = PagingConfig(pageSize, initialLoadSize = 20),
             remoteMediator = PagingRemoteMediator(),
-            pagingSourceFactory = { XLimitOffsetPagingSource() }
+            pagingSourceFactory = { DatabaseHelper.instance.cacheDao().queryWithPagingSource() }
         ).flow
     }
 

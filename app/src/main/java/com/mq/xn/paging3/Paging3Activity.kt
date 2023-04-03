@@ -2,9 +2,9 @@ package com.mq.xn.paging3
 
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.mq.core.BaseViewBindingActivity
 import com.mq.xn.databinding.ActivityPaging3Binding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class Paging3Activity : BaseViewBindingActivity<ActivityPaging3Binding>() {

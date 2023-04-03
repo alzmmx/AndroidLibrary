@@ -1,5 +1,6 @@
 package com.mq.xn.paging3
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -11,6 +12,7 @@ class DataPagingAdapter : PagingDataAdapter<CacheEntry, DataPagingAdapter.ViewHo
     class ViewHolder(val binding: ItemDataBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d("TAG","====>position=$position")
         holder.binding.tvTitle.text = getItem(position)?.id
         holder.binding.tvContent.text = getItem(position)?.data
     }

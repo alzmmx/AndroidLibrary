@@ -12,7 +12,7 @@ import com.mx.tool.ktx.toJson
 
 @OptIn(ExperimentalPagingApi::class)
 class PagingRemoteMediator : RemoteMediator<Int, CacheEntry>() {
-    private var count = 0
+    private var count = 1
     override suspend fun load(loadType: LoadType, state: PagingState<Int, CacheEntry>): MediatorResult {
         Log.d("TAG", "-------->loadType=$loadType")
         val index = when (loadType) {
@@ -23,6 +23,7 @@ class PagingRemoteMediator : RemoteMediator<Int, CacheEntry>() {
             }
         }
         val result = Repository.realGetData(index, 20)
+        Log.d("TAG", "-------->${result.first().id}--${result.last().id}")
         DatabaseHelper.instance.getAppDatabase().withTransaction {
             if (loadType == LoadType.REFRESH) {
                 DatabaseHelper.instance.cacheDao().clearAll()
