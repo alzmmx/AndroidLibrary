@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mq.xn.databinding.ItemDataBinding
 import com.mx.tool.database.CacheEntry
 
-class DataPagingAdapter : PagingDataAdapter<CacheEntry, DataPagingAdapter.ViewHolder>(DataDiffCallback()) {
+class DataPagingAdapter : PagingDataAdapter<UserData, DataPagingAdapter.ViewHolder>(DataDiffCallback()) {
     class ViewHolder(val binding: ItemDataBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d("TAG","====>position=$position")
         holder.binding.tvTitle.text = getItem(position)?.id
-        holder.binding.tvContent.text = getItem(position)?.data
+        holder.binding.tvContent.text = getItem(position)?.name
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

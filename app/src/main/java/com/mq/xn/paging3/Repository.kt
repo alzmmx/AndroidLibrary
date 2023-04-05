@@ -17,30 +17,33 @@ import java.util.*
 object Repository {
     private var pageSize = 20
 
-    private val dataList = mutableListOf<CacheEntry>()
+    private val dataList = mutableListOf<UserData>()
 
-    suspend fun realGetData(page: Int, pageSize: Int): MutableList<CacheEntry> {
+    suspend fun realGetData(page: Int, pageSize: Int): MutableList<UserData> {
 
         return withContext(Dispatchers.IO) {
-            delay(1000)
+            delay(500)
             Log.d("TAG", "--------->page=$page pageSize=$pageSize")
-            dataList.subList(page * pageSize, (page + 1) * pageSize)
+            if (page in 0..10) {
+                dataList.subList(page * pageSize, (page + 1) * pageSize)
+            } else {
+                mutableListOf()
+            }
         }
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getData(): Flow<PagingData<CacheEntry>> {
+    fun getData(): Flow<PagingData<UserData>> {
         return Pager(
-            config = PagingConfig(pageSize, initialLoadSize = 20),
+            config = PagingConfig(pageSize, initialLoadSize = pageSize),
             remoteMediator = PagingRemoteMediator(),
-            pagingSourceFactory = { DatabaseHelper.instance.cacheDao().queryWithPagingSource() }
+            pagingSourceFactory = { XLimitOffsetPagingSource() }
         ).flow
     }
 
     fun init() {
-        val id = SimpleDateFormat("yyyy_MM_dd_HH_mm", Locale.getDefault()).format(Date())
-        for (i in 0..1000) {
-            dataList.add(CacheEntry("$i", "$${i / 20}-$i"))
+        for (i in 100..4000) {
+            dataList.add(UserData("$i", "${i / pageSize}-$i"))
         }
     }
 }

@@ -11,9 +11,9 @@ import com.mx.tool.database.DatabaseHelper
 import com.mx.tool.ktx.toJson
 
 @OptIn(ExperimentalPagingApi::class)
-class PagingRemoteMediator : RemoteMediator<Int, CacheEntry>() {
+class PagingRemoteMediator : RemoteMediator<Int, UserData>() {
     private var count = 1
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, CacheEntry>): MediatorResult {
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, UserData>): MediatorResult {
         Log.d("TAG", "-------->loadType=$loadType")
         val index = when (loadType) {
             LoadType.REFRESH -> 0
@@ -22,13 +22,13 @@ class PagingRemoteMediator : RemoteMediator<Int, CacheEntry>() {
                 count++
             }
         }
-        val result = Repository.realGetData(index, 20)
-        Log.d("TAG", "-------->${result.first().id}--${result.last().id}")
+        val result = Repository.realGetData(index, state.config.pageSize)
         DatabaseHelper.instance.getAppDatabase().withTransaction {
             if (loadType == LoadType.REFRESH) {
                 DatabaseHelper.instance.cacheDao().clearAll()
             }
-            DatabaseHelper.instance.cacheDao().insert(result)
+            val list = result.map { CacheEntry("id_${it.id}", it.toJson()) }.toList()
+            DatabaseHelper.instance.cacheDao().insert(list)
         }
 
         return MediatorResult.Success(result.isEmpty())

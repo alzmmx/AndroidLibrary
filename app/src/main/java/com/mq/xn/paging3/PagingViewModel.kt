@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 class PagingViewModel : ViewModel() {
 
-    fun getData(): Flow<PagingData<CacheEntry>> {
-        return Repository.getData().cachedIn(viewModelScope)
+    fun getData(): Flow<PagingData<UserData>> {
+        return Repository.getData()
+            .cachedIn(viewModelScope)
     }
 }
