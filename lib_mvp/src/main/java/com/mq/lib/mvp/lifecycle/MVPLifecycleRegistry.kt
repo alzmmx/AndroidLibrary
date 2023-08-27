@@ -8,7 +8,8 @@ import androidx.lifecycle.LifecycleRegistry
 /**
  * 这里继承LifecycleRegistry是复用Lifecycle的 Observer管理功能
  */
-class MVPLifecycleRegistry(provider: LifecycleOwner, private val reset: Boolean = false) : LifecycleRegistry(provider) {
+class MVPLifecycleRegistry(provider: LifecycleOwner, private val reset: Boolean = false) :
+    LifecycleRegistry(provider) {
     private val mObserverList = mutableListOf<LifecycleObserver>()
 
     internal fun onCreate() {
@@ -30,8 +31,13 @@ class MVPLifecycleRegistry(provider: LifecycleOwner, private val reset: Boolean 
         handleLifecycleEvent(Event.ON_DESTROY)
     }
 
-    fun clear() {
-        mObserverList.iterator().forEach { removeObserver(it) }
+    internal fun clear() {
+        val iterator = mObserverList.iterator()
+        while (iterator.hasNext()) {
+            val observer = iterator.next()
+            super.removeObserver(observer)
+            iterator.remove()
+        }
     }
 
     private fun resetObserver() {

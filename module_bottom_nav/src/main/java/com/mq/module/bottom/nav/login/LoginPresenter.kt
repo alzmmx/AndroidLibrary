@@ -20,3 +20,11 @@ class LoginPresenter : BasePresenter<LoginRegisterView>() {
 
     }
 }
+
+class CheckPresenter : BasePresenter<CheckView>() {
+
+    fun check() {
+        view?.check()
+    }
+
+}

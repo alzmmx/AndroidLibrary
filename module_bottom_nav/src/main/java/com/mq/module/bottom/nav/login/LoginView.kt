@@ -6,3 +6,8 @@ interface LoginView :IBaseView{
 
     fun loginSuccess()
 }
+
+interface CheckView :IBaseView{
+
+    fun check()
+}
