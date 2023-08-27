@@ -15,7 +15,6 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>() {
     }
 
     override fun initView() {
-        Repository.init()
         binding.button.setOnClickListener {
             startActivity(Intent(this, Paging3Activity::class.java))
         }
