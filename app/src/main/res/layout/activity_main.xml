@@ -16,40 +16,40 @@
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="content" />
 
         <Button
             android:id="@+id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="empty" />
 
         <Button
             android:id="@+id/error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="error" />
 
         <Button
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="loading" />
 
     </LinearLayout>
 
     <com.mx.android.statelayout.StateLayout
         android:id="@+id/stateLayout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         app:content_layout="@layout/content_layout"
-        app:default_State="content"
+        app:default_State="loading"
         app:empty_layout="@layout/empty_layout"
         app:loading_layout="@layout/loading_layout" />
 
 
     <FrameLayout
-        android:id="@+id/fl"
+        android:id="@+id/target"
         android:layout_width="match_parent"
         android:layout_height="300dp">
 

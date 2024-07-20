@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:background="#E64646"
+    android:orientation="vertical"
+    android:minHeight="300dp"
+    android:padding="100dp">
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -17,4 +20,4 @@
         android:layout_gravity="center"
         android:text="Retry" />
 
-</FrameLayout>
+</LinearLayout>
