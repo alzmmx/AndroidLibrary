@@ -28,9 +28,9 @@ abstract class BaseMVPFragment(@LayoutRes contentLayoutId: Int? = null, private 
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         getViewLifecycle().onCreate()
         delegate.attach(this)
+        super.onViewCreated(view, savedInstanceState)
 
     }
 
