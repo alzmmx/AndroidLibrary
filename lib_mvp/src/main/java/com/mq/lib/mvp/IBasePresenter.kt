@@ -5,4 +5,6 @@ interface IBasePresenter<V : IBaseView> {
     fun attachView(v: V)
 
     fun detachView()
+
+    fun isAttach(): Boolean
 }
